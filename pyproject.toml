@@ -1,0 +1,71 @@
+[project]
+name = "forgeml"
+version = "0.1.0"
+description = "Reproducible tabular machine-learning runs from a single JSON spec: preprocessing, training, evaluation against a baseline, explainability and safe model artifacts."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.12"
+authors = [{ name = "John Weng" }]
+keywords = ["machine-learning", "scikit-learn", "reproducibility", "mlops", "tabular"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "numpy>=2.0",
+    "pandas>=2.2",
+    "polars>=1.40,<3",
+    "pydantic>=2.7,<3",
+    "scikit-learn>=1.6,<2",
+    "skops>=0.11",
+]
+
+[project.urls]
+Repository = "https://github.com/wengjohn772-hue/ForgeML"
+
+[project.scripts]
+forgeml = "forgeml.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8.3", "ruff>=0.8", "mypy>=1.13", "nbclient>=0.10", "ipykernel>=6.29", "nbformat>=5.10", "matplotlib>=3.9"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/forgeml"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "RUF", "SIM", "PTH"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S603", "S607"]
+"src/forgeml/exports.py" = ["E501"]  # code templates for generated notebooks/scripts
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]
+mypy_path = "src"
+packages = ["forgeml"]
+
+[[tool.mypy.overrides]]
+module = ["sklearn.*", "skops.*", "pandas.*", "nbformat.*", "threadpoolctl"]
+ignore_missing_imports = true
+
+[[tool.mypy.overrides]]
+module = ["forgeml.exports"]  # nbformat is untyped
+disallow_untyped_calls = false
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

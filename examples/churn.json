@@ -1,0 +1,19 @@
+{
+  "schema": "forgeml.spec/v1",
+  "task": "classification",
+  "target": "churned",
+  "dataset": {
+    "path": "customers.csv"
+  },
+  "exclude": [
+    "customer_id"
+  ],
+  "model": {
+    "name": "gradient_boosting_classifier",
+    "params": {
+      "learning_rate": 0.1
+    }
+  },
+  "cv_folds": 5,
+  "seed": 42
+}
