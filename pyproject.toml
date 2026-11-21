@@ -1,6 +1,6 @@
 [project]
 name = "forgeml"
-version = "0.1.0"
+version = "0.1.1"
 description = "Reproducible tabular machine-learning runs from a single JSON spec: preprocessing, training, evaluation against a baseline, explainability and safe model artifacts."
 readme = "README.md"
 license = "MIT"
@@ -16,6 +16,7 @@ classifiers = [
     "Programming Language :: Python :: 3.13",
 ]
 dependencies = [
+    "nbformat>=5.10",  # writes the reproduction notebook
     "numpy>=2.0",
     "pandas>=2.2",
     "polars>=1.40,<3",

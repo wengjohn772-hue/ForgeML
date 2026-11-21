@@ -34,3 +34,19 @@ jobs:
       - run: uv run --no-sync ruff format --check .
       - run: uv run --no-sync mypy
       - run: uv run --no-sync pytest -q
+
+  clean-install:
+    # Installs ForgeML the way users do (no dev dependencies) and runs the README example.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          python-version: "3.12"
+      - run: uv venv /tmp/clean && uv pip install --python /tmp/clean/bin/python .
+      - name: Run the example and reproduce it
+        run: |
+          cd examples
+          /tmp/clean/bin/forgeml run churn.json --out run
+          cp customers.csv run/
+          cd run && /tmp/clean/bin/python reproduce.py

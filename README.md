@@ -18,7 +18,7 @@ which uses only its public spec/result contract.
 ## Quick start
 
 ```bash
-pip install "forgeml @ git+https://github.com/wengjohn772-hue/ForgeML@v0.1.0"
+pip install "forgeml @ git+https://github.com/wengjohn772-hue/ForgeML@v0.1.1"
 forgeml run examples/churn.json --out run/
 ```
 
